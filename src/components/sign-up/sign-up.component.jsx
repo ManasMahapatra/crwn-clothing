@@ -34,6 +34,7 @@ class SignUp extends React.Component {
     this.setState({ [name]: value });
   }
   render(){
+    //destructure the state
     const { displayName, email, password, confirmPassword } = this.state;
     return(
       <div className="sign-up">
