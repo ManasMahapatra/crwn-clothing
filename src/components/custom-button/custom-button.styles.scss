@@ -11,8 +11,9 @@
   text-transform: uppercase;
   font-family: 'Open Sans Condensed';
   font-weight: bolder;
-  border: none;
+  border: 1px solid #fff;
   cursor: pointer;
+  transition: all .2s;
 
   &:hover {
     background-color: white;
