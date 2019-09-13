@@ -39,6 +39,7 @@ class App extends React.Component{
         <Header/>
         <Switch>
           <Route exact path='/' component={HomePage}/>
+          {/* Setting up Redirects. To make it conditional use one liner if statements in render */}
           <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInSignUp />)} />
           <Route path='/shop' component={ShopPage} />
         </Switch>
