@@ -10,9 +10,9 @@ const CollectionPreview = ({ title,items }) => (
         items
         //filter has index as second argument to callback
         .filter((item,index) => index<4)
-        .map(({ id,...otherItemProps }) => (
+        .map((item) => (
           //always pass key while mapping
-          <CollectionItem key={id} {...otherItemProps} />
+          <CollectionItem key={item.id} item={item} />
         ))
       }
     </div>
