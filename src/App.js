@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route,Switch } from 'react-router-dom';
+import { Route,Switch,Redirect } from 'react-router-dom';
 import './App.css';
 //pages
 //--------------
@@ -14,7 +14,7 @@ import { setCurrentUser } from './redux/user/user.action';
 //the children tree, its called prop tunelling and is often a bad practice.
 //class isnt a callble object. For God's sake stop doing React.Component()....
 class App extends React.Component{
-  // Placing Header out of the switch makes the header comonent stay always on the top, irrespective of the switch page
+  // Placing Header out of the switch makes the header component stay always on the top, irrespective of the switch page
   unsubscribeFromAuth = null
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -39,16 +39,20 @@ class App extends React.Component{
         <Header/>
         <Switch>
           <Route exact path='/' component={HomePage}/>
-          <Route exact path='/signin' component={SignInSignUp} />
-          <Route exact path='/shop' component={ShopPage} />
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInSignUp />)} />
+          <Route path='/shop' component={ShopPage} />
         </Switch>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser
+})
+
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
