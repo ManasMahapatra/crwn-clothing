@@ -4,18 +4,19 @@ import { toggleCartHidden } from '../../redux/cart/cart.actions';
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import './cart-icon.styles.scss';
 
-const CartIcon = ({ toggleCartHidden,cartItems }) => (
+const CartIcon = ({ toggleCartHidden,itemCount }) => (
     <div className="cart-icon" onClick={toggleCartHidden}>
         <ShoppingIcon className='shopping-icon'/>
-        <span className="item-count">{cartItems}</span>
+        {/* Reduce method is a very useful array method. It helps carrying out multiple operations and get a condensed value at the end */}
+        <span className="item-count">{itemCount}</span>
     </div>
 )
 const mapDispatchToProps = dispatch => ({
     toggleCartHidden:() => dispatch(toggleCartHidden())
 })
 
-const mapStateToProps = state => ({
-    cartItems: state.cart.cartItems
+const mapStateToProps = ({ cart: {cartItems} }) => ({
+    itemCount : cartItems.reduce((accumulator,cartItem) => accumulator + cartItem.quantity , 0)
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(CartIcon);
