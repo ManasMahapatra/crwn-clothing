@@ -2,14 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route,Switch,Redirect } from 'react-router-dom';
 import './App.css';
+//--------------
 //pages
 //--------------
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInSignUp from './pages/signIn-signUp/signIn-signUp.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 import { auth,createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.action';
+import { selectCurrentUser } from './redux/user/user.selector' 
 //Prop tunelling: when a prop is only available to the top parent class, and we drill it layers under
 //the children tree, its called prop tunelling and is often a bad practice.
 //class isnt a callble object. For God's sake stop doing React.Component()....
@@ -42,6 +45,7 @@ class App extends React.Component{
           {/* Setting up Redirects. To make it conditional use one liner if statements in render */}
           <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInSignUp />)} />
           <Route path='/shop' component={ShopPage} />
+          <Route exact path='/checkout' component={CheckoutPage} />
         </Switch>
       </div>
     );
@@ -49,7 +53,7 @@ class App extends React.Component{
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+  currentUser: selectCurrentUser(state)
 })
 
 const mapDispatchToProps = dispatch => ({

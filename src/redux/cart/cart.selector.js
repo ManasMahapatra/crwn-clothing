@@ -9,8 +9,14 @@ import { createSelector } from 'reselect';
 // Memorize the major part of state that we deal with --> cart
 const selectCart = state => state.cart
 
+//select hidden
+export const selectHidden = createSelector([selectCart],(cart) => cart.hidden)
+
 //select the cartItems
 export const selectCartItems = createSelector([selectCart],(cart) => cart.cartItems);
 
 //select the ItemCount
 export const selectCartItemsCount = createSelector([selectCartItems],(cartItems) => cartItems.reduce((accumulator,cartItem) => accumulator + cartItem.quantity , 0))
+
+//select the subtotal price
+export const selectCartTotal = createSelector([selectCartItems],(cartItems) => cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.quantity * cartItem.price , 0))
